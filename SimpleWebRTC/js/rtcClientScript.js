@@ -25,17 +25,20 @@ webrtc.on('readyToCall', function () {
 webrtc.on('createdPeer', function (peer) {
     peer.on('fileTransfer', function (metadata, receiver) {
         console.log('incoming filetransfer', metadata.name, metadata);
+        $("#progressBar").show();
         receiver.on('progress', function (bytesReceived) {
             console.log('receive progress', bytesReceived, 'out of', metadata.size);
+            var perc = (bytesReceived/metadata.size)*100;
+            $("#progressBar").css('width', perc+'%').attr('aria-valuenow', perc);
         });
         // get notified when file is done
         receiver.on('receivedFile', function (file, metadata) {
             console.log('received file', metadata.name, metadata.size);
-
+            $("#recFiles").append('<a href="' + URL.createObjectURL(file) + '" name="' + metadata.name + '">' + metadata.name + '</a><br/>')
             // close the channel
+            $("#progressBar").hide();
             receiver.channel.close();
         });
-        filelist.appendChild(item);
     });
     $("#fileIp").on('change', function() {
         var file = $("#fileIp")[0].files[0];
@@ -44,5 +47,6 @@ webrtc.on('createdPeer', function (peer) {
 });
 
 $(document).on("ready", function () {
+    $("#progressBar").hide();
     $("#connectButton").prop("disabled", true);
 });

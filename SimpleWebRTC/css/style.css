@@ -3,7 +3,17 @@ video {
     height: 700px;
 }
 body{
-    padding-left: 150px;
-    padding-right: 150px;
+    padding-left: 100px;
+    padding-right: 100px;
     padding-top: 10px;
+    background: #F1F1F1;
+}
+.box{
+    margin: 2px 2px 2px 2px;
+    background: white;
+    box-shadow: 2px 2px 2px #ccc;
+    padding: 2px 2px 2px 2px;
+}
+#fileIp{
+    margin: 20px;
 }
